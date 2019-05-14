@@ -47,6 +47,7 @@ void Player::initPlayer(Vector2f Position)
 	cptStep = 0;
 	m_Position.x = Position.x;
 	m_Position.y = Position.y;
+	
 }
 
 FloatRect Player::getPosition()
@@ -123,7 +124,7 @@ void Player::stopRight()
 }
 
 
-void Player::update(float elapsedTime, Vector2i mousePosition)
+void Player::update(float elapsedTime)
 {
 
 	
@@ -131,7 +132,7 @@ void Player::update(float elapsedTime, Vector2i mousePosition)
 	{
 		m_Position.x += m_Speed * elapsedTime;
 	}
-	printf("Player position : %f \n", m_Position.x);
+	printf("Player position Y: %f \n", m_Position.y);
 	
 	m_Sprite.setPosition(m_Position);
 
@@ -148,15 +149,7 @@ void Player::update(float elapsedTime, Vector2i mousePosition)
 	//	m_Position.x = m_Arena.left + m_TileSize;
 	}
 
-	if (m_Position.y > m_Arena.height - m_TileSize)
-	{
-		m_Position.y = m_Arena.height - m_TileSize;
-	}
-
-	if (m_Position.y < m_Arena.top + m_TileSize)
-	{
-		m_Position.y = m_Arena.top + m_TileSize;
-	}
+	
 
 	
 }

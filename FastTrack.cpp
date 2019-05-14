@@ -21,8 +21,8 @@ int main()
 
 	// Get the screen resolution and create an SFML window
 	Vector2f resolution;
-	resolution.x = VideoMode::getDesktopMode().width/2;
-	resolution.y = VideoMode::getDesktopMode().height/2;
+	resolution.x = 800;
+	resolution.y = 600;
 
 	RenderWindow window(VideoMode(resolution.x, resolution.y),
 		"FastTrack", Style::Resize);
@@ -38,6 +38,8 @@ int main()
 	// Where is the mouse in relation to world coordinates
 	Vector2f mouseWorldPosition;
 	Vector2f InitPlayerCoordinates;
+	InitPlayerCoordinates.x = 0.0;
+	InitPlayerCoordinates.y = 0.0;
 	// Where is the mouse in relation to screen coordinates
 	Vector2i mouseScreenPosition;
 
@@ -52,11 +54,16 @@ int main()
 	VertexArray background;
 	Sprite spriteBackground;
 	// Load the texture for our background vertex array
-	Texture textureBackground = TextureHolder::GetTexture(
-		"graphics/Track.png");
+	//Texture textureBackground = TextureHolder::GetTexture("graphics/Track.png");
+	//Texture textureBackground = TextureHolder::GetTexture("graphics/background_2.png");
+	Texture textureBackground = TextureHolder::GetTexture("graphics/background.png");
 
 	spriteBackground.setTexture(textureBackground);
 	spriteBackground.setPosition(-(resolution.x/2), -(resolution.y/2));
+
+
+    Vector2f BGPosition = spriteBackground.getPosition() ;
+    printf("BG position init : x : %f y : %f \n", BGPosition.x, BGPosition.y);
 
 	// When was the fire button last pressed?
 	Time lastPressed;
@@ -74,6 +81,8 @@ int main()
 	spriteGameOver.setTexture(textureGameOver);
 	spriteGameOver.setPosition(0, 0);
 
+
+
 	// Create a view for the HUD
 	View hudView(sf::FloatRect(0, 0, resolution.x, resolution.y));
 
@@ -89,9 +98,9 @@ int main()
 	//init Player
 	InitPlayerCoordinates.x = resolution.x /2 ;
 	InitPlayerCoordinates.y = resolution.y /2 - 200;
-	//player.initPlayer(InitPlayerCoordinates);
+	player.initPlayer(InitPlayerCoordinates);
 	InitPlayerCoordinates.y += 100;
-	//player2.initPlayer(InitPlayerCoordinates);
+	player2.initPlayer(InitPlayerCoordinates);
 
 	// The main game loop
 	while (window.isOpen())
@@ -232,14 +241,15 @@ int main()
 			
 
 			// Update the player
-			player.update(dtAsSeconds, Mouse::getPosition());
-			player2.update(dtAsSeconds, Mouse::getPosition());
+			player.update(dtAsSeconds);
+			player2.update(dtAsSeconds);
 
 			// Make a note of the players new position
 			Vector2f playerPosition(player.getCenter());
 
 			// Make the view centre around the player				
 			mainView.setCenter(player.getCenter());
+			//mainView.setCenter(0.0f,0.0f);
 
 			
 			// Increment the number of frames since the last HUD calculation
@@ -275,11 +285,13 @@ int main()
 
 			// Draw the background
 			window.draw(spriteBackground);
+			
 
 			
 			// Draw the player
 			window.draw(player.getSprite());
 			window.draw(player2.getSprite());
+			
 
 			
 		
