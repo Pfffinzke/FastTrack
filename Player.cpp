@@ -132,7 +132,7 @@ void Player::update(float elapsedTime)
 	{
 		m_Position.x += m_Speed * elapsedTime;
 	}
-	printf("Player position Y: %f \n", m_Position.y);
+	
 	
 	m_Sprite.setPosition(m_Position);
 

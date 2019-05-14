@@ -54,21 +54,15 @@ int main()
 	VertexArray background;
 	Sprite spriteBackground;
 	// Load the texture for our background vertex array
-	//Texture textureBackground = TextureHolder::GetTexture("graphics/Track.png");
-	//Texture textureBackground = TextureHolder::GetTexture("graphics/background_2.png");
-	Texture textureBackground = TextureHolder::GetTexture("graphics/background.png");
+	Texture textureBackground = TextureHolder::GetTexture("graphics/Track.png");
+	
 
 	spriteBackground.setTexture(textureBackground);
 	spriteBackground.setPosition(-(resolution.x/2), -(resolution.y/2));
 
 
-    Vector2f BGPosition = spriteBackground.getPosition() ;
-    printf("BG position init : x : %f y : %f \n", BGPosition.x, BGPosition.y);
-
 	// When was the fire button last pressed?
 	Time lastPressed;
-
-
 
 
 	// About the game
@@ -87,8 +81,6 @@ int main()
 	View hudView(sf::FloatRect(0, 0, resolution.x, resolution.y));
 
 
-
-
 	// When did we last update the HUD?
 	int framesSinceLastHUDUpdate = 0;
 
@@ -96,8 +88,8 @@ int main()
 	int fpsMeasurementFrameInterval = 1000;
 
 	//init Player
-	InitPlayerCoordinates.x = resolution.x /2 ;
-	InitPlayerCoordinates.y = resolution.y /2 - 200;
+	InitPlayerCoordinates.x = 0;
+	InitPlayerCoordinates.y = resolution.y /2 - 250;
 	player.initPlayer(InitPlayerCoordinates);
 	InitPlayerCoordinates.y += 100;
 	player2.initPlayer(InitPlayerCoordinates);
@@ -173,7 +165,6 @@ int main()
 			if (Keyboard::isKeyPressed(Keyboard::S))
 			{
 				 // left foot
-				 printf("Left S is pressed \n");
 				player.getLeftFoot();
 			}
 			else
@@ -185,7 +176,6 @@ int main()
 			if (Keyboard::isKeyPressed(Keyboard::D))
 			{
 				// right foot
-				printf("Right D is pressed \n");
 				player.getRightFoot();
 			}
 			else
@@ -198,7 +188,6 @@ int main()
 			if (Keyboard::isKeyPressed(Keyboard::G))
 			{
 				 // left foot
-				 printf("Left S is pressed \n");
 				player2.getLeftFoot();
 			}
 			else
@@ -210,7 +199,6 @@ int main()
 			if (Keyboard::isKeyPressed(Keyboard::H))
 			{
 				// right foot
-				printf("Right D is pressed \n");
 				player2.getRightFoot();
 			}
 			else
@@ -245,13 +233,22 @@ int main()
 			player2.update(dtAsSeconds);
 
 			// Make a note of the players new position
-			Vector2f playerPosition(player.getCenter());
+			Vector2f player1Position(player.getCenter());
+			Vector2f player2Position(player2.getCenter());
+			Vector2f viewPosition;
+			viewPosition.y = 0 ;
 
-			// Make the view centre around the player				
-			mainView.setCenter(player.getCenter());
-			//mainView.setCenter(0.0f,0.0f);
+			// Make the view centre around the fastest player
+			if (player1Position.x > player2Position.x )
+			{
+				viewPosition.x = player1Position.x;
+			}			
+			else
+			{
+				viewPosition.x = player2Position.x;	
+			}
+			mainView.setCenter(viewPosition);
 
-			
 			// Increment the number of frames since the last HUD calculation
 			framesSinceLastHUDUpdate++;
 			// Calculate FPS every fpsMeasurementFrameInterval frames
