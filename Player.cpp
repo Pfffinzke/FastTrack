@@ -17,6 +17,10 @@ Player::Player()
 	m_Sprite.setOrigin(25, 25);
 }
 
+void Player::setColor(sf::Color Color)
+{
+	m_Sprite.setColor(Color);
+}
 void Player::spawn(IntRect arena, Vector2f resolution, int tileSize)
 {
 	// Place the player in the middle of the arena
@@ -93,7 +97,7 @@ void Player::moveRight()
 {
 	
 	if (moveOneStep) {
-		
+		m_Speed = 20;
 		m_MoveRight = true;
 		moveOneStep = false;
 				
@@ -127,12 +131,21 @@ void Player::stopRight()
 void Player::update(float elapsedTime)
 {
 
+
+printf("Speed : %f\n", m_Speed);
 	
 	if (m_MoveRight)
 	{
-		m_Position.x += m_Speed * elapsedTime;
+		m_Position.x += m_Speed * 10.0 * elapsedTime;
 	}
-	
+	else
+	{
+		if (m_Speed > 0)
+		{
+			m_Speed -= 0.1;
+			m_Position.x += m_Speed * 10.0 * elapsedTime;
+		}
+	}
 	
 	m_Sprite.setPosition(m_Position);
 

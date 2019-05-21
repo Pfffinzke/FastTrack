@@ -46,6 +46,7 @@ int main()
 	// Create an instance of the Player class
 	Player player;
 	Player player2;
+	player2.setColor(sf::Color(0, 255, 0));
 
 	// The boundaries of the arena
 	IntRect arena;

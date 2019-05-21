@@ -6,8 +6,7 @@ using namespace sf;
 class Player
 {
 private:
-	const float START_SPEED = 200;
-	const float START_HEALTH = 100;
+	const float START_SPEED = 20;
 	enum Steps {Left, Right};
 
 	// Where is the player
@@ -33,27 +32,14 @@ private:
 	int cptStep;
 	Steps CurrentStep;
 	Steps PreviousStep;
-	// How much health has the player got?
-	int m_Health;
-	// What is the maximum health the player can have
-	int m_MaxHealth;
-	// When was the player last hit
-	Time m_LastHit;
-	// Speed in pixels per second
 	float m_Speed;
 	// All our public functions will come next
 public:
 	Player();
 	void spawn(IntRect arena, Vector2f resolution, int tileSize);
 	// Call this at the end of every game
-	void resetPlayerStats();
-	// Call this at the init of every game
-	void initPlayer(Vector2f Position);
+		void initPlayer(Vector2f Position);
 	// Handle the player getting hit by a zombie
-	bool hit(Time timeHit);
-	// How long ago was the player last hit
-	Time getLastHitTime();
-	// Where is the player
 	FloatRect getPosition();
 	// Where is the center of the player
 	Vector2f getCenter();
@@ -68,10 +54,10 @@ public:
 	// Stop the player moving in a specific direction
 	void stopLeft();
 	void stopRight();
-	void stopUp();
-	void stopDown();
 	// We will call this function once every frame
 	void update(float elapsedTime);
+	// Chose color of player
+	void setColor(sf::Color Color);
 	
 
 };
